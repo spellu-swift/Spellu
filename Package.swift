@@ -20,9 +20,9 @@ let package = Package(
 		),
 	],
 	dependencies: [
-		.package(url: "https://github.com/spellu-swift/Basis", from: "0.10.0"),
-		.package(url: "https://github.com/spellu-swift/UnicodeDatabase", from: "0.10.0"),
-		.package(url: "https://github.com/spellu-swift/SwiftSyntax", "600.0.0"..<"700.0.0"),
+		.package(id: "spellu.Basis", from: "0.10.0"),
+		.package(id: "spellu.UnicodeDatabase", from: "0.10.0"),
+		.package(id: "spellu.SwiftSyntax", "600.0.0"..<"700.0.0"),
 	],
 	targets: [
 		.target(
@@ -37,20 +37,30 @@ let package = Package(
 		),
 		.target(
 			name: "SpelluRegex",
-			dependencies: ["Spellu", "UnicodeDatabase"],
+			dependencies: [
+				"Spellu",
+				.product(name: "UnicodeDatabase", package: "spellu.UnicodeDatabase"),
+			],
 		),
 		.target(
 			name: "SpelluCore",
-			dependencies: ["Basis", "SpelluLex", "SpelluMacros"],
+			dependencies: [
+				.product(name: "Basis", package: "spellu.Basis"),
+				"SpelluLex",
+				"SpelluMacros",
+			],
 		),
 		.target(
 			name: "SpelluLex",
-			dependencies: ["Basis", "UnicodeDatabase"],
+			dependencies: [
+				.product(name: "Basis", package: "spellu.Basis"),
+				.product(name: "UnicodeDatabase", package: "spellu.UnicodeDatabase"),
+			],
 		),
 		.target(
 			name: "SpelluInterpreter",
 			dependencies: [
-				"Basis",
+				.product(name: "Basis", package: "spellu.Basis"),
 				"SpelluCore",
 				"SpelluLex",
 			],
@@ -65,7 +75,7 @@ let package = Package(
 		.target(
 			name: "SpelluSakuya",
 			dependencies: [
-				"Basis",
+				.product(name: "Basis", package: "spellu.Basis"),
 				"SpelluCore",
 				"SpelluLex",
 			],
@@ -73,7 +83,7 @@ let package = Package(
 		.target(
 			name: "SpelluHoori",
 			dependencies: [
-				"Basis",
+				.product(name: "Basis", package: "spellu.Basis"),
 				"SpelluCore",
 				"SpelluLex",
 			],
@@ -81,7 +91,7 @@ let package = Package(
 		.macro(
 			name: "SpelluMacros",
 			dependencies: [
-				.product(name: "SwiftSyntax", package: "SwiftSyntax"),
+				.product(name: "SwiftSyntax", package: "spellu.SwiftSyntax"),
 			],
 		),
 
@@ -89,7 +99,7 @@ let package = Package(
 			name: "SpelluTests",
 			dependencies: [
 				"Spellu",
-				.product(name: "Testing", package: "Basis"),
+				.product(name: "Testing", package: "spellu.Basis"),
 			],
 		),
 		.testTarget(
@@ -97,56 +107,56 @@ let package = Package(
 			dependencies: [
 				"SpelluRegex",
 				"SpelluCore",
-				.product(name: "Testing", package: "Basis"),
+				.product(name: "Testing", package: "spellu.Basis"),
 			],
 		),
 		.testTarget(
 			name: "SpelluCoreTests",
 			dependencies: [
 				"SpelluCore",
-				.product(name: "Testing", package: "Basis"),
+				.product(name: "Testing", package: "spellu.Basis"),
 			],
 		),
 		.testTarget(
 			name: "SpelluLexTests",
 			dependencies: [
 				"SpelluLex",
-				.product(name: "Testing", package: "Basis"),
+				.product(name: "Testing", package: "spellu.Basis"),
 			],
 		),
 		.testTarget(
 			name: "SpelluInterpreterTests",
 			dependencies: [
 				"SpelluInterpreter",
-				.product(name: "Testing", package: "Basis"),
+				.product(name: "Testing", package: "spellu.Basis"),
 			],
 		),
 		.testTarget(
 			name: "SpelluMikazuchiTests",
 			dependencies: [
 				"SpelluMikazuchi",
-				.product(name: "Testing", package: "Basis"),
+				.product(name: "Testing", package: "spellu.Basis"),
 			],
 		),
 		.testTarget(
 			name: "SpelluSakuyaTests",
 			dependencies: [
 				"SpelluSakuya",
-				.product(name: "Testing", package: "Basis"),
+				.product(name: "Testing", package: "spellu.Basis"),
 			],
 		),
 		.testTarget(
 			name: "SpelluHooriTests",
 			dependencies: [
 				"SpelluHoori",
-				.product(name: "Testing", package: "Basis"),
+				.product(name: "Testing", package: "spellu.Basis"),
 			],
 		),
 		.testTarget(
 			name: "SpelluMacrosTests",
 			dependencies: [
 				"SpelluMacros",
-				.product(name: "Testing", package: "Basis"),
+				.product(name: "Testing", package: "spellu.Basis"),
 			],
 		),
 		.testTarget(
@@ -154,14 +164,14 @@ let package = Package(
 			dependencies: [
 				"Spellu",
 				"SpelluRegex",
-				.product(name: "Testing", package: "Basis"),
+				.product(name: "Testing", package: "spellu.Basis"),
 			],
 		),
 		.testTarget(
 			name: "SpelluCompatibleTests",
 			dependencies: [
 				"Spellu",
-				.product(name: "Testing", package: "Basis"),
+				.product(name: "Testing", package: "spellu.Basis"),
 			],
 		),
 	],
